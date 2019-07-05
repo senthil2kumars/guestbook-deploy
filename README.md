@@ -223,7 +223,6 @@ Just like the others, we create a service to group the guestbook pods but this t
 You can now play with the guestbook that you just created by opening it in a browser (it might take a few moments for the guestbook to come up).
 
  * **Local Host:**
-    If you are running Kubernetes locally, to view the guestbook, navigate to `http://localhost:3000` in your browser.
 
  * **Remote Host:**
     1. To view the guestbook on a remote host, locate the external IP of the load balancer in the **IP** column of the `kubectl get services` output. In our example, the internal IP address is `10.0.217.218` and the external IP address is `146.148.81.8` (*Note: you might need to scroll to see the IP column*).
@@ -235,7 +234,7 @@ You can now play with the guestbook that you just created by opening it in a bro
     ![Guestbook](../guestbook-page.png)
 
 
-### instead of executing each and every yaml file, I have merged all files into single file
+### Instead of executing each and every yaml file, I have merged all files into single file
 
 Apply the resources by running the following command:
 
@@ -256,43 +255,40 @@ ingress.extensions/guestbook created
 
     ```console
     root@master:~/mstakx/guestbook_deployment# kubectl get all -n production
-NAME                                READY   STATUS    RESTARTS   AGE
-pod/guestbook-v1-6cb588d958-5sqmk   1/1     Running   0          25s
-pod/guestbook-v1-6cb588d958-7kvk8   1/1     Running   0          25s
-pod/guestbook-v1-6cb588d958-lw9fd   1/1     Running   0          25s
-pod/redis-master-58c99d6fd4-htp9l   1/1     Running   0          25s
-pod/redis-slave-86d554c866-5jxtq    1/1     Running   0          25s
-pod/redis-slave-86d554c866-c97z5    1/1     Running   0          25s
+    NAME                                READY   STATUS    RESTARTS   AGE
+    pod/guestbook-v1-6cb588d958-5sqmk   1/1     Running   0          25s
+    pod/guestbook-v1-6cb588d958-7kvk8   1/1     Running   0          25s
+    pod/guestbook-v1-6cb588d958-lw9fd   1/1     Running   0          25s
+    pod/redis-master-58c99d6fd4-htp9l   1/1     Running   0          25s
+    pod/redis-slave-86d554c866-5jxtq    1/1     Running   0          25s
+    pod/redis-slave-86d554c866-c97z5    1/1     Running   0          25s
 
 
-NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
-service/guestbook      ClusterIP   10.100.134.127   <none>        3000/TCP   25s
-service/redis-master   ClusterIP   10.111.210.146   <none>        6379/TCP   25s
+    NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+    service/guestbook      ClusterIP   10.100.134.127   <none>        3000/TCP   25s
+    service/redis-master   ClusterIP   10.111.210.146   <none>        6379/TCP   25s
+
+    NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+    deployment.apps/guestbook-v1   3/3     3            3           25s
+    deployment.apps/redis-master   1/1     1            1           25s
+    deployment.apps/redis-slave    2/2     2            2           25s
+
+    NAME                                      DESIRED   CURRENT   READY   AGE
+    replicaset.apps/guestbook-v1-6cb588d958   3         3         3       25s
+    replicaset.apps/redis-master-58c99d6fd4   1         1         1       25s
+    replicaset.apps/redis-slave-86d554c866    2         2         2       25s
 
 
-NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/guestbook-v1   3/3     3            3           25s
-deployment.apps/redis-master   1/1     1            1           25s
-deployment.apps/redis-slave    2/2     2            2           25s
+    root@master:~/mstakx/guestbook_deployment# kubectl get secret,ingress -n production
+    NAME                          TYPE                                  DATA   AGE
+    secret/default-token-9tnv9    kubernetes.io/service-account-token   3      95s
+    secret/production-guestbook   Opaque                                2      74s
 
-NAME                                      DESIRED   CURRENT   READY   AGE
-replicaset.apps/guestbook-v1-6cb588d958   3         3         3       25s
-replicaset.apps/redis-master-58c99d6fd4   1         1         1       25s
-replicaset.apps/redis-slave-86d554c866    2         2         2       25s
-
-
-
-
-root@master:~/mstakx/guestbook_deployment# kubectl get secret,ingress -n production
-NAME                          TYPE                                  DATA   AGE
-secret/default-token-9tnv9    kubernetes.io/service-account-token   3      95s
-secret/production-guestbook   Opaque                                2      74s
-
-NAME                           HOSTS                 ADDRESS   PORTS     AGE
-ingress.extensions/guestbook   guestbook.mstakx.io             80, 443   74s
-root@master:~/mstakx/guestbook_deployment#
-    ...
-
+    NAME                           HOSTS                 ADDRESS   PORTS     AGE
+    ingress.extensions/guestbook   guestbook.mstakx.io             80, 443   74s
+    root@master:~/mstakx/guestbook_deployment#
+    ```
+    
 Result: The guestbook displays in your browser:
 ![Guestbook](guestbook.mstakx.png)
 
