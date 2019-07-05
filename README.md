@@ -267,7 +267,7 @@ ingress.extensions/guestbook created
     NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
     service/guestbook      ClusterIP   10.100.134.127   <none>        3000/TCP   25s
     service/redis-master   ClusterIP   10.111.210.146   <none>        6379/TCP   25s
-
+    service/redis-slave    ClusterIP   10.110.1.0      <none>        6379/TCP   87s
     NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
     deployment.apps/guestbook-v1   3/3     3            3           25s
     deployment.apps/redis-master   1/1     1            1           25s
