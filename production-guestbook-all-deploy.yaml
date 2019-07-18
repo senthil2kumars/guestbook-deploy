@@ -105,6 +105,9 @@ spec:
         ports:
         - name: http-server
           containerPort: 3000
+        resources:
+          requests:
+             cpu: 100m
 ---
 apiVersion: v1
 data:
