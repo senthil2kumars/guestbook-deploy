@@ -149,3 +149,16 @@ spec:
         backend:
           serviceName: guestbook
           servicePort: 3000
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: guestbook-v1
+spec:
+  maxReplicas: 10
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: guestbook-v1
+  targetCPUUtilizationPercentage: 50
