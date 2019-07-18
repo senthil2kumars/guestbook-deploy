@@ -2,18 +2,6 @@
 
 This example shows how to build a simple multi-tier web application using Kubernetes and Docker. The application consists of a web front end, Redis master for storage, and replicated set of Redis slaves, all for which we will create Kubernetes replication controllers, pods, and services.
 
-##### Table of Contents
-
- * [Prerequisites](#prerequisites)
- * [Create the Redis master pod](#create-the-redis-master-pod)
- * [Create the Redis master service](#create-the-redis-master-service)
- * [Create the Redis slave pods](#create-the-redis-slave-pods)
- * [Create the Redis slave service](#create-the-redis-slave-service)
- * [Create the guestbook pods](#create-the-guestbook-pods)
- * [Create the guestbook service](#create-the-guestbook-service)
- * [View the guestbook](#view-the-guestbook)
- * [Cleanup](#cleanup)
-
 ### Prerequisites
 
 This example assumes that you have a working cluster. See the [Getting Started Guides](https://kubernetes.io/docs/setup/) for details about creating a cluster.
@@ -292,3 +280,16 @@ ingress.extensions/guestbook created
 Result: The guestbook displays in your browser:
 ![Guestbook](guestbook.mstakx.png)
 
+
+### Autoscaling has been configured for the fronend guestbook deployment.
+  To test the autoscaling functionality, execute below
+  
+  ```
+    $kubectl apply -f production-load-generator-job.yaml
+  
+    (or)
+    $kubectl apply -f staging-load-generator-job.yaml
+  
+    $kubectl get hpa -n production
+    NAME           REFERENCE                 TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+    guestbook-v1   Deployment/guestbook-v1   167%/30%    1         10        5          90m
